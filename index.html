@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>LED 炫彩时钟</title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			canvas {
+				background-image: url(img/775f12523fe82906e90d26f3990b885e.jpg);
+				display: block;
+				margin: 0 auto;
+			}
+			#div{
+				width: 100%;
+				height: 100%;
+				border: 1px solid red;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="div">
+			<canvas id="mycanvas" width="1900" height="800"></canvas>			
+		</div>
+
+		<script type="text/javascript">
+			var numbers = [
+				[
+					[0, 0, 1, 1, 1, 0, 0],
+					[0, 1, 1, 0, 1, 1, 0],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 1, 1, 0, 1, 1, 0],
+					[0, 0, 1, 1, 1, 0, 0]
+				], //0
+				[
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 1, 1, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[1, 1, 1, 1, 1, 1, 1]
+				], //1
+				[
+					[0, 1, 1, 1, 1, 1, 0],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 1, 1, 0, 0, 0],
+					[0, 1, 1, 0, 0, 0, 0],
+					[1, 1, 0, 0, 0, 0, 0],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 1, 1, 1, 1, 1]
+				], //2
+				[
+					[1, 1, 1, 1, 1, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 1, 1, 1, 0, 0],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 1, 1, 1, 1, 1, 0]
+				], //3
+				[
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 1, 1, 1, 0],
+					[0, 0, 1, 1, 1, 1, 0],
+					[0, 1, 1, 0, 1, 1, 0],
+					[1, 1, 0, 0, 1, 1, 0],
+					[1, 1, 1, 1, 1, 1, 1],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 1, 1, 1, 1]
+				], //4
+				[
+					[1, 1, 1, 1, 1, 1, 1],
+					[1, 1, 0, 0, 0, 0, 0],
+					[1, 1, 0, 0, 0, 0, 0],
+					[1, 1, 1, 1, 1, 1, 0],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 1, 1, 1, 1, 1, 0]
+				], //5
+				[
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 1, 1, 0, 0, 0],
+					[0, 1, 1, 0, 0, 0, 0],
+					[1, 1, 0, 0, 0, 0, 0],
+					[1, 1, 0, 1, 1, 1, 0],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 1, 1, 1, 1, 1, 0]
+				], //6
+				[
+					[1, 1, 1, 1, 1, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 0, 1, 1, 0, 0, 0],
+					[0, 0, 1, 1, 0, 0, 0],
+					[0, 0, 1, 1, 0, 0, 0],
+					[0, 0, 1, 1, 0, 0, 0]
+				], //7
+				[
+					[0, 1, 1, 1, 1, 1, 0],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 1, 1, 1, 1, 1, 0],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 1, 1, 1, 1, 1, 0]
+				], //8
+				[
+					[0, 1, 1, 1, 1, 1, 0],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[1, 1, 0, 0, 0, 1, 1],
+					[0, 1, 1, 1, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 0, 1, 1],
+					[0, 0, 0, 0, 1, 1, 0],
+					[0, 0, 0, 1, 1, 0, 0],
+					[0, 1, 1, 0, 0, 0, 0]
+				], //9
+				[
+					[0, 0, 0, 0],
+					[0, 0, 0, 0],
+					[0, 1, 1, 0],
+					[0, 1, 1, 0],
+					[0, 0, 0, 0],
+					[0, 0, 0, 0],
+					[0, 1, 1, 0],
+					[0, 1, 1, 0],
+					[0, 0, 0, 0],
+					[0, 0, 0, 0]
+				] //冒号:
+			];
+			var c = document.getElementById("mycanvas");
+			var c = c.getContext("2d");
+
+			var R = 10;
+			var x = 50;
+			var y = 50;
+			var time = new Date();
+			var timearr = []; //存放时间的每一个数字
+			var ballarray = [
+				//[x,y,xv,yv,R,9.8,color]
+			];
+			getTime();
+			drawTime();
+
+			setInterval(function() {
+				updatetime();
+				getTime();
+				drawTime();
+				drawball();
+			}, 50);
+
+			function updatetime() {
+				var date = new Date();
+				var h = date.getHours();
+				var m = date.getMinutes();
+				var s = date.getSeconds();
+
+				if(s != time.getSeconds()) {
+					var s1 = time.getSeconds() % 10;
+					if(s1 !=  s% 10) {
+						//添加数字小球
+						addball(7, s1);
+					}
+
+					var s2 = parseInt(time.getSeconds()/ 10);
+					if(s2 != parseInt( s/ 10)) {
+						//添加数字小球
+						addball(6, s2);
+					}
+					var m1 = time.getMinutes() % 10;
+					if(m1 != m% 10) {
+						//添加数字小球
+						addball(4, m1);
+					}
+
+					var m2 = parseInt(time.getMinutes() / 10);
+					if(m2 != parseInt(m/ 10)) {
+						//添加数字小球
+						addball(3, m2);
+					}
+					var h1 = time.getHours() % 10;
+					if(h1 != h % 10) {
+						//添加数字小球
+						addball(1, h1);
+					}
+
+					var h2 = parseInt(time.getHours() / 10);
+					if(h2 != parseInt( h/ 10)) {
+						//添加数字小球
+						addball(0, h2);
+					}
+
+				}
+
+			}
+
+			function addball(index, num) {
+				var left = 400;
+				//小球爆炸的位置
+				for(var i = 0; i < index; i++) {
+					if(i == 2 || i == 5) {
+						left = left + 9 * R;
+					} else {
+						left = left + 15 * R;
+					}
+				}
+				for(var i = 0; i < numbers[num].length; i++) {
+					for(var k = 0; k < numbers[num][0].length; k++) {
+						if(numbers[num][i][k] == 1) {
+							var xv = parseInt(Math.random() * 10) + 5;
+							var yv = parseInt(Math.random() * 10) + 5;
+							if(Math.random() > 0.5) {
+								yv = yv * -1;
+								xv = xv * -1;
+							}
+							var color = "rgb(" + parseInt(Math.random() * 256) + "," + parseInt(Math.random() * 256) + "," + parseInt(Math.random() * 256) + ")";
+							ballarray.push([left + k * 2 * R + x, 2 * i * R + y, xv, yv, R, 6, color])
+						}
+					}
+				}
+			}
+
+			function drawball() {
+				var count=0;
+				for(var i = 0; i < ballarray.length; i++) {
+					c.beginPath();
+					c.arc(ballarray[i][0], ballarray[i][1], ballarray[i][4], 0, 2 * Math.PI);
+					c.fillStyle = ballarray[i][6];
+					c.fill();
+					ballarray[i][0] = ballarray[i][0] + ballarray[i][2];
+					ballarray[i][1] = ballarray[i][1] + ballarray[i][3];
+					ballarray[i][3] = ballarray[i][3] + ballarray[i][5];
+					
+					if(ballarray[i][1]>=800-R){
+						ballarray[i][1]=800-R;
+						//小球反弹的速度
+						ballarray[i][3]=ballarray[i][3]*-0.6;
+					}
+					if(ballarray[i][0] >= R&& ballarray[i][0]<=1900-R){
+						ballarray[count] = ballarray[i];
+						count++;
+					}
+				}
+				while(count<ballarray.length)
+				{
+					ballarray.pop();
+				}
+
+			}
+
+			function getTime() {
+				time = new Date();
+				var hh = time.getHours(); //9
+				var mm = time.getMinutes(); //15
+				var ss = time.getSeconds(); //7
+				//0,9,10,1,5,10,0,7
+				timearr[0] = parseInt(hh / 10);
+				timearr[1] = hh % 10;
+				timearr[2] = 10;
+				timearr[3] = parseInt(mm / 10);
+				timearr[4] = mm % 10;
+				timearr[5] = 10;
+				timearr[6] = parseInt(ss / 10);
+				timearr[7] = ss % 10;
+			}
+
+			function drawTime() {
+				var width = 400; //距离起始点宽度
+				c.clearRect(0, 0, 1900, 800);
+				for(var t = 0; t < timearr.length; t++) {
+					var num = timearr[t];
+					for(var i = 0; i < numbers[num].length; i++) {
+						for(var k = 0; k < numbers[num][0].length; k++) {
+							if(numbers[num][i][k] == 1) {
+								c.beginPath();
+								c.arc(width + k * 2 * R + x, i * 2 * R + y, R, 0, 2 * Math.PI);
+								c.fill();
+							}
+						}
+					}
+					if(num == 10) {
+						width = width + 9 * R;
+					} else {
+						width = width + 15 * R;
+					}
+				}
+			}
+		</script>
+	</body>
+
+</html>
